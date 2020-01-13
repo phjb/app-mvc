@@ -1,5 +1,5 @@
 
-![](screenshots/phjb.png)
+![](screenshots/phjb_2020.png)
 
 # Introdução
 
