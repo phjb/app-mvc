@@ -3,7 +3,7 @@
 
 # Introdução
 
-Esse projeto é um exemplo prático de como desenvolver `do zero` uma aplicação **MVC** **`M`** -> *`Model (Modelo)`* **`V`** -> *`View (Visão)`*  **`C`** -> *`Controller (Controlador)`*  utilizando o [asp.net core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1).
+Esse projeto é um exemplo prático de como desenvolver uma aplicação *`step by step`* utilizando o padrão **MVC** *`Model (Modelo)`* *`View (Visão)`* *`Controller (Controlador)`*  com o [asp.net core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1).
 
 ### Tecnologia
 * SDK do .NET Core
@@ -16,11 +16,20 @@ Esse projeto é um exemplo prático de como desenvolver `do zero` uma aplicaçã
 ### Editor de Código
 * [Visual Studio Code](https://code.visualstudio.com/)
 
+## 
+
+### Extensões
+As extensões do VS Code permitem adicionar idiomas, depuradores e ferramentas à sua instalação para dar suporte ao seu fluxo de trabalho de desenvolvimento. O rico modelo de extensibilidade do VS Code permite que os autores de extensões se conectem diretamente à interface do usuário do VS Code e contribuam com a funcionalidade por meio das mesmas APIs usadas pelo VS Code. [Veja mais aqui](https://code.visualstudio.com/docs/editor/extension-gallery/).
+
+### 
+
+![](screenshots/my-extensions-to-vscode.png)
+
 
 
 ### Um pouco de *Command Line Interface*
 Usando um **terminal** que pode ser `cmd`, `PowerShell`, `Git Bash` ou outro da sua escolha, a primeira coisa a se fazer é escolher o nosso *template*, o **dotnet** nos disponibiliza vários modelos. Para visualizar esses modelos bastar digitar no terminal
-```{ps}
+```bash
 dotnet new
 ```
 Como resultado teremos obteremos:
@@ -65,14 +74,139 @@ Protocol Buffer File                              proto                         
 Como mencionado vamos desenvolver `do zero`, para isso precisaremos de um *template* vazio, então vamos utilizar o modelo `ASP.NET Core Empty` que tem como *short name* `web`.
 
 Novamente no **terminal** vamos digitar
-```
+```bash
 dotnet new web -o app-mvc
 ```
 > ***-o app-mvc*** indica a pasta do nosso projeto!
 
 Agora vamos abrir o nosso projeto no **Visual Studio Code**. Basta digitar no terminal
-```
+```bash
 code .
 ```
 
-## Mão no *Visual Studio Code*
+## Mãos no *Visual Studio Code*
+
+Com o VS Code aberto vamos criar os 3 pastas do **MVC** `Models` `Views` `Controllers`. Por conversão criamos as pastas no *`Plural`*, aconselho a seguirmos essa conversão. 
+
+![](screenshots/ss_1.png)
+
+Agora vamos criar primeiro *Controller* chamado `HomeController.cs` que ficará dentro da pasta ***Controllers*** que acabamos de criar.
+> A classe ***HomeController*** herda da classe base `Controller`. Para que funcione devemos a *diretiva* *`using Microsoft.AspNetCore.Mvc;`*
+
+Com isso nossa **`HomeController`** deverá ter o seguinte código
+
+```c#
+using Microsoft.AspNetCore.Mvc;
+
+namespace app_mvc.Controllers
+{
+    public class HomeController:Controller
+    {
+        public ActionResult Index()
+        {
+            return View();
+        }
+    }
+}
+```
+Agora chegou a vez de criarmos nossa *View* e se chamará `Index.cshtml` e ficará dentra da pasta ***Views > Home***.
+
+Vamos adicionar uns códigos
+```html
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Nossa Primeira View</h1>
+```
+Chegou a hora de vermos os resultados no navegador :rocket:. Esperamos que apareça a frase
+"**Nossa Primeira View**".
+
+
+ Para que isso aconteça vamos rodar a aplicação, no **terminal** vamos digitar
+```bash
+dotnet run
+```
+> O ***dotnet*** nos disponibilizou a seguinte *Url*: [`http://localhost:5000/`](http://localhost:5000/).
+
+![](screenshots/ss_2.png)
+
+*what this is???* :scream:
+
+### Configurando as rotas
+
+Nossa execução não funcionou porque não configuramos as rota da aplicação.
+
+Então vamos configurar. 
+
+Abra o arquivo chamado ***Startup.cs*** e no método *ConfigureServices* vamos adicionar o serviço do ***`MVC`***. O método deverá ficar assim 
+```c#
+ public void ConfigureServices(IServiceCollection services)
+  {
+    services.AddControllersWithViews();
+  }
+```
+
+Vamos adicionar a rota, método *Configure* vamos trocar 
+```c#
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGet("/", async context =>
+    {
+      await context.Response.WriteAsync("Hello World!");
+    });
+}); 
+```
+Por 
+```c#
+app.UseEndpoints(endpoints =>
+ {
+    endpoints.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+  });
+```
+Com isso nosso arquivo ***Startup.cs*** ficará com código abaixo:
+
+```c#
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+namespace app_mvc
+{
+    public class Startup
+    {
+        // This method gets called by the runtime. Use this method to add services to the container.
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllersWithViews();
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                );
+            });
+        }
+    }
+}
+
+```
+
+
+

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\users\\paulo\\documents\\vscode\\aspnetcore-3\\app-mvc\\app-mvc.csproj": {}
+    "C:\\Users\\paulo\\Documents\\vscode\\aspnetcore-3\\app-mvc\\app-mvc.csproj": {}
   },
   "projects": {
-    "C:\\users\\paulo\\documents\\vscode\\aspnetcore-3\\app-mvc\\app-mvc.csproj": {
+    "C:\\Users\\paulo\\Documents\\vscode\\aspnetcore-3\\app-mvc\\app-mvc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\users\\paulo\\documents\\vscode\\aspnetcore-3\\app-mvc\\app-mvc.csproj",
+        "projectUniqueName": "C:\\Users\\paulo\\Documents\\vscode\\aspnetcore-3\\app-mvc\\app-mvc.csproj",
         "projectName": "app-mvc",
-        "projectPath": "C:\\users\\paulo\\documents\\vscode\\aspnetcore-3\\app-mvc\\app-mvc.csproj",
+        "projectPath": "C:\\Users\\paulo\\Documents\\vscode\\aspnetcore-3\\app-mvc\\app-mvc.csproj",
         "packagesPath": "C:\\Users\\paulo\\.nuget\\packages\\",
-        "outputPath": "C:\\users\\paulo\\documents\\vscode\\aspnetcore-3\\app-mvc\\obj\\",
+        "outputPath": "C:\\Users\\paulo\\Documents\\vscode\\aspnetcore-3\\app-mvc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\paulo\\AppData\\Roaming\\NuGet\\NuGet.Config",
