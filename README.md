@@ -135,7 +135,8 @@ dotnet run
 
 ### Configurando as rotas
 
-Nossa execução não funcionou porque não configuramos as rota da aplicação.
+Nossa execução não funcionou porque não configuramos as rota da aplicação :sweat_smile:
+
 
 Então vamos configurar. 
 
@@ -207,6 +208,9 @@ namespace app_mvc
 }
 
 ```
+Vamos rodar novamente nossa aplicação digitando *`dotnet run`* no terminal e acessando o *link*: [`http://localhost:5000/`](http://localhost:5000/).
 
+![](screenshots/ss_3.png)
 
+*Glória a Deuuuuss??* :raised_hands:
 
