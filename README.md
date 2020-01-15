@@ -330,13 +330,13 @@ Para que as funcionalidades do arquivo ***bootstrap.bundle.min.js*** executem se
  ![](screenshots/ss_6.png)
 
  Ao rodarmos nossa aplicação digitando *`dotnet run`* no terminal e acessando o *link*: [`http://localhost:5000/`](http://localhost:5000/), notamos que nada aconteceu:
-
+##
   ![](screenshots/ss_7.png)
-
+##
   Com o nosso navegador aberto em [`http://localhost:5000/`](http://localhost:5000/), clicando com o botão direto do mouse em *`Inspecionar`* e depois na *aba* *`Console`* percebemos que temos o erro  **404 - not found** ou seja *não encontrado*:
-
+##
   ![](screenshots/ss_8.png)
-
+##
   Precisamos *"dizer"* para o ***dotnet*** que queremos usar `arquivos estáticos`. Para isso vamos abrir nosso arquivo ***Startup.cs*** e no método  *Configure* vamos adicionar a configuração `app.UseStaticFiles();`.
   
   O método  *Configure*  ficará da seguinte forma:
@@ -360,3 +360,10 @@ Para que as funcionalidades do arquivo ***bootstrap.bundle.min.js*** executem se
      });
     }
   ```
+  Vamos rodar nossa aplicação digitando *`dotnet run`* no terminal e acessando o *link*: [`http://localhost:5000/`](http://localhost:5000/). O resultado é fantástico! :muscle::sunglasses:
+
+ 
+![](screenshots/ss_9.png)
+
+
+### TagHelpers
