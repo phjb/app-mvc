@@ -214,7 +214,7 @@ Vamos rodar novamente nossa aplicação digitando *`dotnet run`* no terminal e a
 
 *Glória a Deuuuuss???* :raised_hands:
 
-## Layouts
+# Layouts
 
 ### O que é um layout
 
@@ -277,8 +277,8 @@ Agora vamos criar nossa *layout* e ficará dentro da pasta **Views > Shared** e 
 </html>
 
 ```
-## 
-### Especificando um layout - ViewStart.cshtml
+ 
+## Especificando um layout - ViewStart.cshtml
 
 O mecanismo de exibição Razor no MVC possui uma convenção na qual ele procura qualquer arquivo com o nome *`_ViewStart.cshtml`* e executa o código dentro desse arquivo antes de executar o código em uma visualização individual esse arquivo normalmente é colocado diretamente na pasta **Views**.
 
@@ -294,16 +294,16 @@ Ao rodarmos nossa aplicação digitando *`dotnet run`* no terminal e acessando o
 
 ![](screenshots/ss_5.png)
 
-##
-### Cascading Style Sheets - CSS
+
+## Cascading Style Sheets - CSS
 
 ***Cascading Style Sheets (CSS)*** que traduzido para o português, significa Folha de Estilo em Cascatas é um mecanismo para adicionar estilo (cores, fontes, espaçamento, etc.) a um documento web, deixando assim nossas páginas com as aparências mais atraentes.
 
 ![](screenshots/css-x-cores-css-existente-como-dar-manutencao-1538334855.gif)
 
 Ao invés de criarmos um arquivo *`css`* e customizarmos todas as *tags* uma por uma, podemos utilizar um [Framework](https://pt.wikipedia.org/wiki/Framework) que nos ajudará nessa missão, estou falando do [Bootstrap ](https://getbootstrap.com/) que é o framework mais utilizado para criar layouts e telas de sistemas web, dashboards, sites responsivos e sites comuns, também. Ele facilita muito o trabalho de front-end.
-##
-### Bootstrap no AspNetCore
+
+## Bootstrap no AspNetCore
 
 Vou utilizar a versão 4.4 do *Bootstrap* e para fazer o *download* [clique aqui](https://getbootstrap.com/docs/4.4/getting-started/download/).
 
@@ -366,4 +366,23 @@ Para que as funcionalidades do arquivo ***bootstrap.bundle.min.js*** executem se
 ![](screenshots/ss_9.png)
 
 
-### TagHelpers
+# TagHelpers
+
+Perceba que se tentarmos navegar clicando nos *links* no nosso menu nada acontece, para isso precisamos utilizar as  ***`TagHelpers`***.
+
+As ***TagHelpers*** são componentes reutilizáveis para automatizar a geração de HTML na Razor Pages, e não estão disponíveis para a página por padrão, são ativados adicionando uma diretiva *`@addTagHelper`* à página ou, geralmente, a um arquivo   ***_ViewImports.cshtml***.
+
+### Habilitando TagHelpers
+
+Vamos criar nossa *`_ViewImports.cshtml`* na pasta **Views** com o código abaixo:
+
+```html
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+```
+A diretiva *`@addTagHelper`* é seguida por um caractere `(*)` para especificar que todas *TagHelper* encontrados no assembly especificado devem ser usados e, em seguida, é fornecido o nome do assembly que contém as *TagHelper*.
+> `Microsoft.AspNetCore.Mvc.TagHelpers` é o assembly que contém  ***TagHelper***.
+
+Para saber mais, acesse a documentação oficial [clicando aqui](https://docs.microsoft.com/pt-br/aspnet/core/mvc/views/tag-helpers/intro?view=aspnetcore-3.1).
+
+
+
