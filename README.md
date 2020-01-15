@@ -135,7 +135,7 @@ dotnet run
 
 ### Configurando as rotas
 
-Nossa execução não funcionou porque não configuramos as rota da aplicação :sweat_smile:
+Nossa execução não funcionou como o esperado porque não configuramos as rota da aplicação :sweat_smile:
 
 
 Então vamos configurar. 
@@ -212,5 +212,151 @@ Vamos rodar novamente nossa aplicação digitando *`dotnet run`* no terminal e a
 
 ![](screenshots/ss_3.png)
 
-*Glória a Deuuuuss??* :raised_hands:
+*Glória a Deuuuuss???* :raised_hands:
 
+## Layouts
+
+### O que é um layout
+
+A maioria dos aplicativos Web tem um layout comum que fornece aos usuários uma experiência consistente durante sua navegação de uma página a outra. O layout normalmente inclui elementos comuns de interface do usuário, como o cabeçalho do aplicativo, elementos de menu ou de navegação e rodapé. [Por Steve Smith e Dave Brock](https://docs.microsoft.com/pt-br/aspnet/core/mvc/views/layout?view=aspnetcore-3.1).
+
+![](screenshots/page-layout.png)
+
+Estruturas HTML comuns, como scripts e folhas de estilo, também são usadas com frequência por muitas páginas em um aplicativo. Todos esses elementos compartilhados podem ser definidos em um arquivo de layout, que pode então ser referenciado por qualquer exibição usada no aplicativo. Os layouts reduzem o código duplicado em exibições. Por convenção, o layout padrão de um aplicativo ASP.NET Core é chamado *`_Layout.cshtml`*, e segue o modelo abaixo:
+
+![](screenshots/ss_4.png)
+
+### Criando nossa *_Layout.cshtml*
+
+Agora vamos criar nossa *layout* e ficará dentro da pasta **Views > Shared** e terá o código abaixo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - app-mvc</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">app-mvc</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - app-mvc - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+```
+## 
+### Especificando um layout - ViewStart.cshtml
+
+O mecanismo de exibição Razor no MVC possui uma convenção na qual ele procura qualquer arquivo com o nome *`_ViewStart.cshtml`* e executa o código dentro desse arquivo antes de executar o código em uma visualização individual esse arquivo normalmente é colocado diretamente na pasta **Views**.
+
+Vamos criar nossa *`_ViewStart.cshtml`* na pasta **Views** com o código abaixo:
+
+```html
+@{
+    Layout = "_Layout";
+}
+```
+
+Ao rodarmos nossa aplicação digitando *`dotnet run`* no terminal e acessando o *link*: [`http://localhost:5000/`](http://localhost:5000/), notamos que funcionou como o esperado.
+
+![](screenshots/ss_5.png)
+
+##
+### Cascading Style Sheets - CSS
+
+***Cascading Style Sheets (CSS)*** que traduzido para o português, significa Folha de Estilo em Cascatas é um mecanismo para adicionar estilo (cores, fontes, espaçamento, etc.) a um documento web, deixando assim nossas páginas com as aparências mais atraentes.
+
+![](screenshots/css-x-cores-css-existente-como-dar-manutencao-1538334855.gif)
+
+Ao invés de criarmos um arquivo *`css`* e customizarmos todas as *tags* uma por uma, podemos utilizar um [Framework](https://pt.wikipedia.org/wiki/Framework) que nos ajudará nessa missão, estou falando do [Bootstrap ](https://getbootstrap.com/) que é o framework mais utilizado para criar layouts e telas de sistemas web, dashboards, sites responsivos e sites comuns, também. Ele facilita muito o trabalho de front-end.
+##
+### Bootstrap no AspNetCore
+
+Vou utilizar a versão 4.4 do *Bootstrap* e para fazer o *download* [clique aqui](https://getbootstrap.com/docs/4.4/getting-started/download/).
+
+Por convensão os arquivos externos ficam dentro da pasta ***wwwroot > lib > {biblioteca/framework} > dist*** 
+> * Em nosso caso substituiremos `{biblioteca/framework}` por `bootstrap` 
+
+Nossa estrutura ficará assim:
+> css
+> * *`wwwroot > lib > bootstrap > dist > css`*
+>>  Vamos adicionar na pasta `css` apenas o arquivo ***bootstrap.min.css***
+
+> js
+> * *`wwwroot > lib > bootstrap > dist > js`*
+>> E na pasta `js` adicionaremos apenas o arquivo ***bootstrap.bundle.min.js***
+
+Para que as funcionalidades do arquivo ***bootstrap.bundle.min.js*** executem sem maiores problemas precisaremos incluir também a biblioteca `JavaScript` [jQuery](https://jquery.com/).
+> Temos que criar a pasta **jquery** em ***wwwroot > lib***
+
+ para fazer o download da versão 3.4.1 [clique aqui](https://code.jquery.com/jquery-3.4.1.min.js) e salve em: 
+ >*`wwwroot > lib > jquery > dist`* com o nome ***jquery.min.js***
+
+ As estruturas de pastas devem ficar assim:
+
+ ![](screenshots/ss_6.png)
+
+ Ao rodarmos nossa aplicação digitando *`dotnet run`* no terminal e acessando o *link*: [`http://localhost:5000/`](http://localhost:5000/), notamos que nada aconteceu:
+
+  ![](screenshots/ss_7.png)
+
+  Com o nosso navegador aberto em [`http://localhost:5000/`](http://localhost:5000/), clicando com o botão direto do mouse em *`Inspecionar`* e depois na *aba* *`Console`* percebemos que temos o erro  **404 - not found** ou seja *não encontrado*:
+
+  ![](screenshots/ss_8.png)
+
+  Precisamos *"dizer"* para o ***dotnet*** que queremos usar `arquivos estáticos`. Para isso vamos abrir nosso arquivo ***Startup.cs*** e no método  *Configure* vamos adicionar a configuração `app.UseStaticFiles();`.
+  
+  O método  *Configure*  ficará da seguinte forma:
+
+  ```c#
+  public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+   {
+     if (env.IsDevelopment())    
+      {
+       app.UseDeveloperExceptionPage();
+      }
+
+     app.UseRouting();
+     app.UseStaticFiles();
+
+     app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+     });
+    }
+  ```
