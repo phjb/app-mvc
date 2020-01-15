@@ -3,7 +3,8 @@
 
 # Introdução
 
-Esse projeto é um exemplo prático de como desenvolver uma aplicação *`step by step`* utilizando o padrão **MVC** *`Model (Modelo)`* *`View (Visão)`* *`Controller (Controlador)`*  com o [asp.net core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1).
+Esse projeto é um exemplo prático de como desenvolver uma aplicação *`step by step`* utilizando o padrão **MVC** com o [asp.net core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1).
+
 
 ### Tecnologia
 * SDK do .NET Core
@@ -25,15 +26,38 @@ As extensões do VS Code permitem adicionar idiomas, depuradores e ferramentas �
 
 ![](screenshots/my-extensions-to-vscode.png)
 
+##
 
+# O que é MVC?
+**MVC** é o acrônimo de *Model-View-Controller* (em português: Arquitetura *Modelo-Visão-Controle*) é um padrão de projeto de software, ou padrão de arquitetura de software formulado na década de 1970, focado no reuso de código e a separação de conceitos em três camadas interconectadas, onde a apresentação dos dados e interação dos usuários *`front-end`* são separados dos métodos que interagem com o banco de dados *`back-end`*. [Wikipedia](https://pt.wikipedia.org/wiki/MVC).
 
-### Um pouco de *Command Line Interface*
+**MVC** é nada mais que um padrão de arquitetura de software, separando sua aplicação em 3 camadas. A camada de interação do usuário(***view***), a camada de manipulação dos dados(***model***) e a camada de controle(***controller***). [Tableless](https://tableless.com.br/mvc-afinal-e-o-que/).
+
+![](screenshots/model-view-controller-architecture.gif)
+
+## Model
+
+Sempre que você pensar em manipulação de dados, pense em model. Ele é responsável pela **leitura** e **escrita de dados**, e também de suas **validações**. [Tableless](https://tableless.com.br/mvc-afinal-e-o-que/).
+
+## View
+
+Simples: a camada de interação com o usuário. Ela apenas faz a **exibição dos dados**, sendo ela por meio de um html ou xml.
+[Tableless](https://tableless.com.br/mvc-afinal-e-o-que/).
+
+## Controller
+
+O responsável por **receber** todas as **requisições do usuário**. Seus métodos chamados *actions* são responsáveis por uma página, controlando qual `model` usar e qual `view` será mostrado ao usuário.
+[Tableless](https://tableless.com.br/mvc-afinal-e-o-que/).
+
+##
+
+# Um pouco de *Command Line Interface*
 Usando um **terminal** que pode ser `cmd`, `PowerShell`, `Git Bash` ou outro da sua escolha, a primeira coisa a se fazer é escolher o nosso *template*, o **dotnet** nos disponibiliza vários modelos. Para visualizar esses modelos bastar digitar no terminal
 ```bash
 dotnet new
 ```
 Como resultado teremos obteremos:
-```
+```bash
 Templates                                         Short Name               Language          Tags
 ----------------------------------------------------------------------------------------------------------------------------------
 Console Application                               console                  [C#], F#, VB      Common/Console
@@ -90,7 +114,7 @@ Com o VS Code aberto vamos criar os 3 pastas do **MVC** `Models` `Views` `Contro
 
 ![](screenshots/ss_1.png)
 
-Agora vamos criar primeiro *Controller* chamado `HomeController.cs` que ficará dentro da pasta ***Controllers*** que acabamos de criar.
+Agora vamos criar a primeiro *Controller* chamada `HomeController.cs` que ficará dentro da pasta ***Controllers*** que acabamos de criar.
 > A classe ***HomeController*** herda da classe base `Controller`. Para que funcione devemos a *diretiva* *`using Microsoft.AspNetCore.Mvc;`*
 
 Com isso nossa **`HomeController`** deverá ter o seguinte código
@@ -222,7 +246,7 @@ A maioria dos aplicativos Web tem um layout comum que fornece aos usuários uma 
 
 ![](screenshots/page-layout.png)
 
-Estruturas HTML comuns, como scripts e folhas de estilo, também são usadas com frequência por muitas páginas em um aplicativo. Todos esses elementos compartilhados podem ser definidos em um arquivo de layout, que pode então ser referenciado por qualquer exibição usada no aplicativo. Os layouts reduzem o código duplicado em exibições. Por convenção, o layout padrão de um aplicativo ASP.NET Core é chamado *`_Layout.cshtml`*, e segue o modelo abaixo:
+Estruturas HTML comuns, como scripts e folhas de estilo, também são usadas com frequência por muitas páginas em um aplicativo. Todos esses elementos compartilhados podem ser definidos em um arquivo de layout, que pode então ser referenciado por qualquer página usada no aplicativo. Os layouts reduzem o código duplicado nas página. Por convenção, o layout padrão de um aplicativo ASP.NET Core é chamado *`_Layout.cshtml`*, e segue o modelo abaixo:
 
 ![](screenshots/ss_4.png)
 
@@ -280,7 +304,7 @@ Agora vamos criar nossa *layout* e ficará dentro da pasta **Views > Shared** e 
  
 ## Especificando um layout - ViewStart.cshtml
 
-O mecanismo de exibição Razor no MVC possui uma convenção na qual ele procura qualquer arquivo com o nome *`_ViewStart.cshtml`* e executa o código dentro desse arquivo antes de executar o código em uma visualização individual esse arquivo normalmente é colocado diretamente na pasta **Views**.
+O mecanismo de exibição Razor no MVC possui uma convenção na qual ele procura qualquer arquivo com o nome *`_ViewStart.cshtml`* e executa o código dentro desse arquivo antes de executar o código em uma página individual esse arquivo normalmente é colocado diretamente na pasta **Views**.
 
 Vamos criar nossa *`_ViewStart.cshtml`* na pasta **Views** com o código abaixo:
 
@@ -297,11 +321,11 @@ Ao rodarmos nossa aplicação digitando *`dotnet run`* no terminal e acessando o
 
 ## Cascading Style Sheets - CSS
 
-***Cascading Style Sheets (CSS)*** que traduzido para o português, significa Folha de Estilo em Cascatas é um mecanismo para adicionar estilo (cores, fontes, espaçamento, etc.) a um documento web, deixando assim nossas páginas com as aparências mais atraentes.
+***Cascading Style Sheets (CSS)*** que traduzido para o português, significa *`Folha de Estilo em Cascatas`* é um mecanismo para adicionar estilo (cores, fontes, espaçamento, etc.) a um documento web, deixando assim nossas páginas com as aparências mais atraentes.
 
 ![](screenshots/css-x-cores-css-existente-como-dar-manutencao-1538334855.gif)
 
-Ao invés de criarmos um arquivo *`css`* e customizarmos todas as *tags* uma por uma, podemos utilizar um [Framework](https://pt.wikipedia.org/wiki/Framework) que nos ajudará nessa missão, estou falando do [Bootstrap ](https://getbootstrap.com/) que é o framework mais utilizado para criar layouts e telas de sistemas web, dashboards, sites responsivos e sites comuns, também. Ele facilita muito o trabalho de front-end.
+Ao invés de criarmos um arquivo *`css`* e customizarmos todas as *tags* uma por uma, podemos utilizar um [Framework](https://pt.wikipedia.org/wiki/Framework) que nos ajudará nessa missão, estou falando do [Bootstrap ](https://getbootstrap.com/) que é o framework mais utilizado para criar layouts e páginas de sistemas web, dashboards, sites responsivos e sites comuns, também. Ele facilita muito o trabalho de front-end.
 
 ## Bootstrap no AspNetCore
 
