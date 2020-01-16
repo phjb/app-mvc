@@ -408,5 +408,183 @@ A diretiva *`@addTagHelper`* é seguida por um caractere `(*)` para especificar 
 
 Para saber mais, acesse a documentação oficial [clicando aqui](https://docs.microsoft.com/pt-br/aspnet/core/mvc/views/tag-helpers/intro?view=aspnetcore-3.1).
 
+# Models
+
+### O que é Model? 
+Segundo o [Portal GSTI](https://www.portalgsti.com.br/2017/08/padrao-mvc-arquitetura-model-view-controller.html):
+* É responsável pela comunicação com o banco de dados.
+* É a camada que contém a estrutura de dado atrás de uma parte específica da aplicação.
+* Responsável pela leitura manipulação e validação de dados, e também de suas validações.
+* Responsável por tratar as regras de negócio. 
+* Obtém os dados e os traduz em informações relevantes para serem exibidas pela View.
+* Notifica a view e controler associados quando há uma mudança em seu estado.
+
+## Criando Model *Aluno*
+
+A Model ***Aluno*** não seguirá nenhum `Padrão de Projeto`*`(Design Patterns)`* pois se tratado de um exemplo de nível **básico**. Porém, se tem interresse em saber mais, recomendo:
+* [eBook de Design Patterns](https://www.fabiosilvalima.net/design-patterns-vol-1/) `FREE`
+* [Use a Cabeça! Padrões de Projetos](https://www.amazon.com.br/Cabe%C3%A7a-Padr%C3%B5es-Projetos-Eric-Freeman/dp/8576081741/ref=sr_1_1?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=Use+a+Cabe%C3%A7a%21+Padr%C3%B5es+de+Projetos&qid=1579186619&s=books&sr=1-1) `PAGO`
+
+Agora ***mão no código***, primeiramente criaremos uma *controller* ***`AlunoController.cs`*** na pasta **Controllers**. Incluíremos um *método* publico do tipo `IActionResult` com o nome **Index** que retornará todos os alunos cadastrados.
+```c#
+using Microsoft.AspNetCore.Mvc;
+
+namespace app_mvc.Controllers
+{
+    public class AlunoController : Controller
+    {
+        // GET: Alunos
+        public IActionResult Index()
+        {
+            
+            return View();
+        }
+    }
+}
+```
+### Model *Aluno*
+
+**Models** nada mais é do um classe, com isso em mente criaremos nossa `classe` ***Aluno.cs*** na pasta **Models** que seguirá o [diagrama de classe](https://pt.wikipedia.org/wiki/Diagrama_de_classes) abaixo:
+
+![](screenshots/ss_10.png)
+
+O Código:
+
+```c#
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace app_mvc.Models
+{
+    public class Aluno
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }    
+        public int Idade { get; set; }
+        public char Genero { get; set; }
+        public string Curso { get; set; }
+        private List<Aluno> _listaAluno;
+    }
+}
+```
+
+Como não farei uma comunicação com o *Banco de Dados*, vou criar o *método* ***CriarAluno*** manualmente.
+```c#
+public void CriarAluno()
+{
+  try
+  {
+    _listaAluno = new List<Aluno>()
+    {
+        new Aluno(){ Id = 1,Nome= "Paulo",Idade=29, Genero = 'M', Curso="Ciência da Computação"},
+        new Aluno(){ Id = 2,Nome= "Alexandre",Idade=20, Genero = 'M', Curso="Economia"},
+        new Aluno(){ Id = 3,Nome= "Carlos",Idade=25, Genero = 'M', Curso="Ciências Contábeis"},
+        new Aluno(){ Id = 4,Nome= "Bianca",Idade=25, Genero = 'F', Curso="Ciência da Computação"},
+        new Aluno(){ Id = 5,Nome= "Laura",Idade=35, Genero = 'F', Curso="Literatura"}
+    };
+   }
+    catch (System.Exception ex)
+    {
+          
+        throw new Exception(ex.Message);
+    }
+}
+```
+> Destacando que pelo `Design Patterns` deveriamos ter uma `Classe` que implementaria uma `Interface` de ***Aluno***.
+
+Criaremos o *método* **BuscarAluno** na *Classe* **Aluno** que retorna uma *`lista de Aluno`*:
+```c#
+public List<Aluno> BuscarAluno()
+{
+    try
+    {
+     return _listaAluno;
+    }
+    catch (System.Exception ex)
+    {
+     throw new Exception(ex.Message);
+    }
+}
+``` 
+
+**Maravilha!!!** :ok_hand:
+
+Voltando para *Controller* **AlunoController.cs** no método ***Index*** vamos fazer com que esse método use nossa *Model* **Aluno**.
+Primeiro use a diretiva `using app_mvc.Models;` e depois altere o método **Index** para o código abaixo:
+```c#
+// GET: Alunos
+public IActionResult Index()
+{
+    Aluno _aluno = new Aluno();  
+    _aluno.CriarAluno();
+
+    return View(_aluno.BuscarAluno());
+}
+```
+> Mais uma recomendação do `Design Patterns` para nosso código acima seria usar [Injeção de Dependência](https://www.devmedia.com.br/design-patterns-injecao-de-dependencia-com-csharp/23671).
+
+## Criando a View *Index* do *AlunoController*
+
+Criaremos a ***Index.cshtml*** dentro da *pasta* ***Views > Aluno*** como o código abaixo:
+
+```html
+@model IEnumerable<app_mvc.Models.Aluno>
+
+@{
+    ViewData["Title"] = "Aluno";
+}
+
+<div class="jumbotron jumbotron-fluid text-center">
+  <div class="container">
+    <h1 class="display-4">Aluno</h1>
+    <p class="lead">Aqui vemos o resultado da implementação da <i>Model</i> <strong>Aluno</strong>.</p>
+  </div>
+</div>
+<div class="container">
+    <table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Código</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Idade</th>
+      <th scope="col">Sexo</th>
+      <th scope="col">Curso</th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach (var aluno in Model)
+      {
+        <tr>
+            <td>@aluno.Id</td>
+            <td>@aluno.Nome</td>
+            <td>@aluno.Idade</td>
+            <td>@aluno.Genero</td>
+            <td>@aluno.Curso</td>
+        </tr>
+      }
+   
+  </tbody>
+    </table>
+</div>
+```
+### Adicionando um link na *Layout*
+
+Adicionaremos uma *ação* para que possamos acessar a nossa página. Na ***_Layout.cshtml*** modificaremos o código que direciona para a **View** ***`Privacy`*** que não estamos usando. O código ficará assim:
+
+```html
+ <li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Aluno" asp-action="Index">Aluno</a>
+ </li>
+```
+
+## Resultado Final
+
+![](screenshots/ss_11.png)
+
+
+
+
 
 
