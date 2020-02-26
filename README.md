@@ -14,7 +14,7 @@ Esse projeto é um exemplo prático de como desenvolver uma aplicação *`step b
 ```
 ## 
 
-### Editor de Código
+### Editor de Código 
 * [Visual Studio Code](https://code.visualstudio.com/)
 
 ## 
